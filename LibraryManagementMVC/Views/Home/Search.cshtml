@@ -1,0 +1,33 @@
+﻿@model IEnumerable<BookModel>
+
+
+<form method="post" asp-controller="Home" asp-action="Index">
+    <span>Title:</span><input type="text" name="SearchBook" />
+    <span>Author:</span><input type="text" name="SearchBook" />
+    <span>ISBN:</span><input type="text" name="SearchBook" />
+    <input type="submit" value="Search" />
+    <br />
+    <br />
+</form>
+<table cellpadding="0" cellspacing="0">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Title)</th>
+        <th>@Html.DisplayNameFor(model => model.Author)</th>
+        <th>@Html.DisplayNameFor(model => model.ISBN)</th>
+        <th>@Html.DisplayNameFor(model => model.IsAvailable)</th>
+        <th></th>
+    </tr>
+    @foreach (BookModel item in Model)
+    {
+        <tr>
+            <td>@item.Title</td>
+            <td>@item.Author</td>
+            <td>@item.ISBN</td>
+            <td>@item.IsAvailable</td>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ISBN">borrow</a>
+            </td>
+        </tr>
+    }
+</table>

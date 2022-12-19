@@ -1,0 +1,9 @@
+﻿@model BookBorrowModel
+
+<form method="post" asp-controller="Home" asp-action="Borrow">
+    @Html.TextBoxFor(model => model.ISBN, new { @class = "form-control" })
+    @Html.TextBoxFor(model => model.MemnberId, new { @class = "form-control" })
+    <input type="submit" value="Save" />
+    <br />
+    <br />
+</form>

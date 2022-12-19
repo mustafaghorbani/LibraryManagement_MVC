@@ -1,0 +1,48 @@
+﻿@model IEnumerable<DailyReportModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.BookTitle)</th>
+            <th>@Html.DisplayNameFor(model => model.ISBN)</th>
+            <th>@Html.DisplayNameFor(model => model.MemberId)</th>
+            <th>@Html.DisplayNameFor(model => model.MemberName)</th>
+            <th>@Html.DisplayNameFor(model => model.DueDate)</th>
+            <th>@Html.DisplayNameFor(model => model.IsLateDueDate)</th>
+            <th>@Html.DisplayNameFor(model => model.Penalty)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ISBN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MemberId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MemberName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DueDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsLateDueDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Penalty)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
