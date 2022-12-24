@@ -1,0 +1,45 @@
+﻿@model IEnumerable<BookModel>
+
+<div class="col-md-12 page-header">
+    Search Book:
+</div>
+
+
+<form class="form-group card p-3 bg-light" method="post" asp-controller="Home" asp-action="SearchBook">
+        <div class="row mb-2">
+            <div class="col"><input type="text" class="form-control" placeholder="Title"></div>
+            <div class="col"><input type="text" class="form-control" placeholder="Author"></div>
+            <div class="col"><input type="text" class="form-control" placeholder="ISBN"></div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="float: right;">Search</button>
+</form>
+<br />
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">@Html.DisplayNameFor(model => model.Title)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Author)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.ISBN)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.IsAvailable)</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (BookModel item in Model)
+        {
+            <tr>
+                <td scope="row">@item.Title</td>
+                <td scope="row">@item.Author</td>
+                <td scope="row">@item.ISBN</td>
+                <td scope="row">@item.IsAvailable</td>
+                <td scope="row">
+                    <a asp-action="Borrow" asp-route-id="@item.ISBN">borrow</a>
+                   @* <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#borrowModal">
+                        borrow
+                    </button>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

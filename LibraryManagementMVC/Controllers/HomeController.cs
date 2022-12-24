@@ -3,13 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Net.Http.Headers;
-using System.Reflection;
 
 namespace LibraryManagementMVC.Controllers
 {
     public class HomeController : Controller
     {
-        private const  string BASE_URI_ADDRESS= "https://localhost:7211/";
+        private const string BASE_URI_ADDRESS = "https://localhost:7211/";
 
         /// <summary>
         /// Daily Report Action
@@ -49,7 +48,7 @@ namespace LibraryManagementMVC.Controllers
                 client.BaseAddress = new Uri(BASE_URI_ADDRESS);
 
                 //HTTP POST
-                var postTask = client.PostAsJsonAsync<BookBorrowModel>("api/BookTransactions/BorrowBook",model);
+                var postTask = client.PostAsJsonAsync<BookBorrowModel>("api/BookTransactions/BorrowBook", model);
                 postTask.Wait();
                 var result = postTask.Result;
                 if (result.IsSuccessStatusCode)
@@ -70,7 +69,7 @@ namespace LibraryManagementMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchBook(string title,string author,string isbn)
+        public IActionResult SearchBook(string title, string author, string isbn)
         {
             var searchModel = new SearchBookModel() { Title = title, Author = author, ISBN = isbn };
             var bookList = new List<BookModel>();
@@ -96,7 +95,7 @@ namespace LibraryManagementMVC.Controllers
             return View();
         }
 
-       
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

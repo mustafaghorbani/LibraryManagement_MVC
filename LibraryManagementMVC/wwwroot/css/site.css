@@ -16,3 +16,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.page-header {
+    margin-bottom: 20px;
+    font-size: larger;
+    font-weight: bold;
+}

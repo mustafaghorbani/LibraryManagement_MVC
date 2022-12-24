@@ -8,7 +8,7 @@
         public int MemberId { get; set; }
         public string MemberName { get; set; }
 
-        public int TransactionId { get; set; }
+        public Guid TransactionId { get; set; }
         public DateTime DueDate { get; set; }
         public bool IsLateDueDate { get; set; }
         public double Penalty { get; set; }
