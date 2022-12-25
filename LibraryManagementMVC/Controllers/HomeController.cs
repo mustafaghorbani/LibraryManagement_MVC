@@ -1,5 +1,6 @@
 ﻿using LibraryManagementMVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Net.Http.Headers;
@@ -8,7 +9,12 @@ namespace LibraryManagementMVC.Controllers
 {
     public class HomeController : Controller
     {
-        private const string BASE_URI_ADDRESS = "https://localhost:7211/";
+        private readonly string baseAddress;
+
+        public HomeController(IOptions<ApiServiceSetting> options)
+        {
+            baseAddress = options.Value.BaseAddress;
+        }
 
         /// <summary>
         /// Daily Report Action
@@ -20,7 +26,7 @@ namespace LibraryManagementMVC.Controllers
             var dailyReportModelList = new List<DailyReportModel>();
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(BASE_URI_ADDRESS);
+                client.BaseAddress = new Uri(baseAddress);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage Res = await client.GetAsync("api/BookTransactions/DailyReport");
@@ -45,7 +51,7 @@ namespace LibraryManagementMVC.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(BASE_URI_ADDRESS);
+                client.BaseAddress = new Uri(baseAddress);
 
                 //HTTP POST
                 var postTask = client.PostAsJsonAsync<BookBorrowModel>("api/BookTransactions/BorrowBook", model);
@@ -62,24 +68,19 @@ namespace LibraryManagementMVC.Controllers
             return View(model);
         }
 
-        public IActionResult SearchBook()
-        {
-            var bookList = new List<BookModel>();
-            return View(bookList);
-        }
-
-        [HttpPost]
+        [HttpGet]
         public IActionResult SearchBook(string title, string author, string isbn)
         {
-            var searchModel = new SearchBookModel() { Title = title, Author = author, ISBN = isbn };
             var bookList = new List<BookModel>();
+            if (string.IsNullOrEmpty(title) && string.IsNullOrEmpty(author) && string.IsNullOrEmpty(isbn))
+                return View(bookList);
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(BASE_URI_ADDRESS);
+                client.BaseAddress = new Uri(baseAddress);
 
                 //HTTP POST
-                var postTask = client.PostAsJsonAsync<SearchBookModel>("api/Books/SearchBook", searchModel);
+                var postTask = client.PostAsJsonAsync<SearchBookModel>("api/Books/SearchBook", new SearchBookModel() { Title = title, Author = author, ISBN = isbn });
                 postTask.Wait();
                 var result = postTask.Result;
                 if (result.IsSuccessStatusCode)
@@ -91,10 +92,8 @@ namespace LibraryManagementMVC.Controllers
             }
 
             ModelState.AddModelError(string.Empty, "Server Error. Please Try Again Later.");
-
-            return View();
+            return View(bookList);
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

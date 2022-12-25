@@ -5,13 +5,13 @@
 </div>
 
 
-<form class="form-group card p-3 bg-light" method="post" asp-controller="Home" asp-action="SearchBook">
-        <div class="row mb-2">
-            <div class="col"><input type="text" class="form-control" placeholder="Title"></div>
-            <div class="col"><input type="text" class="form-control" placeholder="Author"></div>
-            <div class="col"><input type="text" class="form-control" placeholder="ISBN"></div>
-        </div>
-        <button type="submit" class="btn btn-primary" style="float: right;">Search</button>
+<form class="form-group card p-3 bg-light" method="get" asp-controller="Home" asp-action="SearchBook">
+    <div class="row mb-2">
+        <div class="col"><input type="text" name="title" id="title" class="form-control" placeholder="Title"></div>
+        <div class="col"><input type="text" name="author" id="author" class="form-control" placeholder="Author"></div>
+        <div class="col"><input type="text" name="isbn" id="isbn" class="form-control" placeholder="ISBN"></div>
+    </div>
+    <button type="submit" class="btn btn-primary" style="float: right;">Search</button>
 </form>
 <br />
 <br />
@@ -34,10 +34,7 @@
                 <td scope="row">@item.ISBN</td>
                 <td scope="row">@item.IsAvailable</td>
                 <td scope="row">
-                    <a asp-action="Borrow" asp-route-id="@item.ISBN">borrow</a>
-                   @* <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#borrowModal">
-                        borrow
-                    </button>*@
+                    <a asp-action="Borrow" asp-route-isbn="@item.ISBN">borrow</a>
                 </td>
             </tr>
         }
