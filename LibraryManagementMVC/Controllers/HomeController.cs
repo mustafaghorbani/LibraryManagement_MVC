@@ -54,7 +54,7 @@ namespace LibraryManagementMVC.Controllers
                 client.BaseAddress = new Uri(baseAddress);
 
                 //HTTP POST
-                var postTask = client.PostAsJsonAsync<BookBorrowModel>("api/BookTransactions/BorrowBook", model);
+                var postTask = client.PostAsJsonAsync<BookBorrowModel>("api/BookTransactions/Borrow", model);
                 postTask.Wait();
                 var result = postTask.Result;
                 if (result.IsSuccessStatusCode)
@@ -80,7 +80,7 @@ namespace LibraryManagementMVC.Controllers
                 client.BaseAddress = new Uri(baseAddress);
 
                 //HTTP POST
-                var postTask = client.PostAsJsonAsync<SearchBookModel>("api/Books/SearchBook", new SearchBookModel() { Title = title, Author = author, ISBN = isbn });
+                var postTask = client.PostAsJsonAsync<SearchBookModel>("api/Books/Search", new SearchBookModel() { Title = title, Author = author, ISBN = isbn });
                 postTask.Wait();
                 var result = postTask.Result;
                 if (result.IsSuccessStatusCode)
